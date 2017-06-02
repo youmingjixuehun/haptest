@@ -1,2 +1,0 @@
-# haptest
-hap测试
