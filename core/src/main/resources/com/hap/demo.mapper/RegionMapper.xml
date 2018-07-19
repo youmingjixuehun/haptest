@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.mapper.RegionMapper">
+    <resultMap id="BaseResultMap" type="demo.dto.Region" extends="com.hand.hap.mapper.StdMapper.STD">
+        <result column="REGION_ID" property="regionId" jdbcType="DOUBLE"/>
+        <!--<result column="REGION_CODE" property="regionCode" jdbcType="VARCHAR"/> -->
+        <result column="REGION_NAME" property="regionName" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="DOUBLE"/>
+        <!--<result column="REGION_LEVEL" property="regionLevel" jdbcType="DOUBLE"/>
+        <result column="REGION_ORDER" property="regionOrder" jdbcType="DOUBLE"/>
+        <result column="REGION_NAME_EN" property="regionNameEn" jdbcType="VARCHAR"/>
+        <result column="REGION_SHORTNAME_EN" property="regionShortnameEn" jdbcType="VARCHAR"/> -->
+    </resultMap>
+
+    <select id="selectByRegion" parameterType="demo.dto.Region" resultMap="BaseResultMap">
+        select m.REGION_ID,
+        m.REGION_NAME,
+        m.PARENT_ID
+         FROM region m
+        <!--
+        <where>
+            1=1
+            <if test="regionId != null">
+                and REGION_ID = #{regionId,jdbcType=DOUBLE}
+            </if>
+            <if test="regionCode != null">
+                and REGION_CODE = #{regionCode,jdbcType=VARCHAR}
+            </if>
+            <if test="regionName != null">
+                and REGION_NAME = #{regionName,jdbcType=VARCHAR}
+            </if>
+            <if test="parentId != null">
+                and PARENT_ID = #{parentId,jdbcType=DOUBLE}
+            </if>
+        </where>
+        -->
+    </select>
+</mapper>

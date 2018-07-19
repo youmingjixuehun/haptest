@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.mapper.PhoneMapper">
+    <resultMap id="BaseResultMap" type="demo.dto.Phone" extends="com.hand.hap.mapper.StdMapper.STD">
+        <result column="PHONE_ID" property="phoneId" jdbcType="DECIMAL"/>
+        <result column="PHONE_NUM" property="phoneNum" jdbcType="VARCHAR"/>
+        <result column="PHONE_DESC" property="phoneDesc" jdbcType="VARCHAR"/>
+        <result column="PERSON_ID" property="personId" jdbcType="VARCHAR"/>
+        <result column="PHONE_FLAG" property="phoneFlag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectByPhone" parameterType="demo.dto.Phone" resultMap="BaseResultMap">
+        select m.PHONE_ID,
+               m.PHONE_NUM,
+               m.PHONE_DESC,
+               m.PERSON_ID,
+               m.PHONE_FLAG
+        FROM my_test01_phone m
+        where m.PERSON_ID = #{personId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertPhone" parameterType="demo.dto.Phone">
+        INSERT INTO my_test01_phone
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="phoneNum != null" >
+                PHONE_NUM,
+            </if>
+            <if test="phoneDesc != null">
+                PHONE_DESC,
+            </if>
+                PERSON_ID,
+                PHONE_FLAG
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="phoneNum != null" >
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneDesc != null">
+                #{phoneDesc,jdbcType=VARCHAR},
+            </if>
+                #{personId,jdbcType=DECIMAL},
+                #{phoneFlag,jdbcType=VARCHAR},
+        </trim>
+    </insert>
+
+    <update id="updatePhone" parameterType="demo.dto.Phone" >
+        update my_test01_phone
+        <set >
+            <if test="phoneNum != null" >
+                PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneDesc != null">
+                PHONE_DESC = #{phoneDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneFlag != null">
+                PHONE_FLAG = #{phoneFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PHONE_ID = #{phoneId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deletePhone" parameterType="demo.dto.Phone" >
+        delete from my_test01_phone
+        where PHONE_ID = #{phoneId,jdbcType=DECIMAL}
+    </delete>
+
+
+    <delete id="deletePersonPhone" parameterType="demo.dto.Phone" >
+        delete from my_test01_phone
+        where PERSON_ID = #{personId,jdbcType=DECIMAL}
+    </delete>
+
+</mapper>
